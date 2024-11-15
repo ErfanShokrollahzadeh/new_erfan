@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+        }
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            padding: 20px;
+            color: white;
+        }
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+        }
+        .sidebar-link {
+            color: white;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s;
+            margin-bottom: 5px;
+        }
+        .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            color: white;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3 class="mb-4 text-center">Dashboard</h3>
+        <div class="user-profile text-center mb-4">
+            <i class="fas fa-user-circle fa-3x mb-2"></i>
+            <h5>{{ user.username }}</h5>
+            <p class="small">{{ user.email }}</p>
+        </div>
+        <nav>
+            <a href="{% url 'myapp:dashboard' %}" class="sidebar-link active">
+                <i class="fas fa-home mr-2"></i> Home
+            </a>
+            <a href="#" class="sidebar-link">
+                <i class="fas fa-chart-bar mr-2"></i> Analytics
+            </a>
+            <a href="#" class="sidebar-link">
+                <i class="fas fa-cog mr-2"></i> Settings
+            </a>
+            <a href="{% url 'myapp:logout' %}" class="sidebar-link">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h6 class="text-muted">Welcome Back</h6>
+                    <h2>{{ user.username }}</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h6 class="text-muted">Account Status</h6>
+                    <h2><i class="fas fa-check-circle text-success"></i> Active</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h6 class="text-muted">Member Since</h6>
+                    <h2>{{ user.date_joined|date:"M Y" }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Activity</h5>
+                        <p class="text-muted">Your recent actions will appear here</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Quick Actions</h5>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <i class="fas fa-user-edit mr-2"></i> Edit Profile
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <i class="fas fa-bell mr-2"></i> Notifications
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
